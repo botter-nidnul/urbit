@@ -36,10 +36,6 @@ let
       urbit-debug  = urbit { env = plat; debug = true;  };
     };
 
-  darwin_extra = {
-    inherit (darwin.env) ranlib ld sdk ar toolchain tapi strip;
-  };
-
 in
 
 {
