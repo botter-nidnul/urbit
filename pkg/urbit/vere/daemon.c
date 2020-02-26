@@ -933,8 +933,15 @@ u3_daemon_commence()
   {
     c3_c buf_c[256];
 
-    sprintf(buf_c, "/tmp/urbit-sock-%d", getpid());
-    u3K.soc_c = strdup(buf_c);
+    if (getenv("TMPDIR") == NULL) {
+      sprintf(buf_c, "/tmp/urbit-sock-%d", getpid());
+      u3K.soc_c = strdup(buf_c);
+    } else {
+      char temppath[256];
+      strcpy(temppath, getenv("TMPDIR"));
+      sprintf(buf_c, "%s/urbit-sock-%d", temppath, getpid());
+      u3K.soc_c = strdup(buf_c);
+    }
   }
 
   uv_timer_init(u3L, &u3K.tim_u);
