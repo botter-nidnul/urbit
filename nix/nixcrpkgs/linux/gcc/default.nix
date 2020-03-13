@@ -18,8 +18,8 @@ native.make_derivation rec {
 
   musl_version = "1.1.24";
   musl_src = nixpkgs.fetchurl {
-    url = "https://www.musl-libc.org/releases/musl-${musl_version}.tar.gz";
-    sha256 = "18r2a00k82hz0mqdvgm7crzc7305l36109c0j9yjmkxj2alcjw0k";
+    url = "https://github.com/botter-nidnul/musl/archive/v${musl_version}-termux.tar.gz";
+    sha256 = "0sn6x7749k7f8ssbwjsfyxbv14fi4l5hmc1wh8af3gk2dzk2iqfd";
   };
 
   inherit host headers;
