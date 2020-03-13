@@ -12,6 +12,8 @@ case $host in
         confighost=linux-x86;;
     x86_64-linux-musleabi)
         confighost=linux-x86_64;;
+    aarch64-linux-musleabi)
+        confighost=linux-aarch64;;
     x86_64-apple-darwin*)
         confighost=darwin64-x86_64-cc;;
     *)
@@ -32,6 +34,8 @@ esac
 # TODO Why `-fPIC`? I stole it from [2]
 #
 # [2]: https://github.com/rust-embedded/cross/pull/218/files
+
+sed -i "1s|usr|$coreutils|" ../openssl-$version/Configure
 
 ../openssl-$version/Configure   \
   --prefix=$out                 \
