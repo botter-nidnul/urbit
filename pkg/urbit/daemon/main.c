@@ -678,8 +678,16 @@ main(c3_i   argc,
   }
   // printf("vere: hostname is %s\n", u3_Host.ops_u.nam_c);
 
-  u3K.certs_c = strdup("/tmp/urbit-ca-cert-XXXXXX");
-  _setup_cert_store(u3K.certs_c);
+  if (getenv("TMPDIR") == NULL) {
+    u3K.certs_c = strdup("/tmp/urbit-ca-cert-XXXXXX");
+    _setup_cert_store(u3K.certs_c);
+  } else {
+    char tmppath[256];
+    strcpy(tmppath, getenv("TMPDIR"));
+    strcat(tmppath, "/urbit-ca-cert-XXXXXX");
+    u3K.certs_c = strdup(tmppath);
+    _setup_cert_store(u3K.certs_c);
+  }
 
   if ( c3y == u3_Host.ops_u.dem ) {
     printf("boot: running as daemon\n");
