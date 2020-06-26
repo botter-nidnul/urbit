@@ -11,6 +11,7 @@ sed -i 's/^CC.*/CC = '"$host-gcc/"               Makefile
 
 cat Makefile
 
+make CPPFLAGS+=" -DMDB_USE_ROBUST=0"
 make CFLAGS+="-fPIC"
 
 make DESTDIR="$out" prefix=/ install
