@@ -12,8 +12,8 @@ case $host in
         confighost=linux-x86;;
     x86_64-linux-musleabi)
         confighost=linux-x86_64;;
-    aarch64-linux-musleabi)
-        confighost=linux-aarch64;;
+    armv6-linux-musleabi)
+        confighost="linux-armv4 -march=armv6";;
     x86_64-apple-darwin*)
         confighost=darwin64-x86_64-cc;;
     *)

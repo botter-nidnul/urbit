@@ -10,7 +10,7 @@ let
       deps = crossdeps env;
     };
 
-  linux-arm64 = release "linux-arm64" nixcrpkgs.linux-arm64;
+  linux-arm32 = release "linux-arm32" nixcrpkgs.linux-rpi;
 
   ent = env:
     import ./pkgs/ent/cross.nix env;
@@ -44,5 +44,5 @@ let
 in
 
 {
-  linux-arm64 = builds-for-platform linux-arm64;
+  linux-arm32 = builds-for-platform linux-arm32;
 }

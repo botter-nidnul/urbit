@@ -21,7 +21,7 @@ mkdir build
 cd build
 
 # Hack
-if [ $host = aarch64-linux-musleabi ]
+if [ $host = armv6-linux-musleabi ]
 then
   sed -i 's/^CFG_FAULT=$/CFG_FAULT=fault-linux-arm.h/' \
     ../libsigsegv-$version/configure
