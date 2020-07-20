@@ -15,6 +15,19 @@ patch -p1 << 'HEREDOC'
  /* 64 bit registers */
 
 HEREDOC
+patch -p1 << 'HEREDOC'
+--- a/src/fault-linux-arm.h     2017-03-04 09:25:47.000000000 -0600
++++ b/src/fault-linux-arm.h     2020-07-19 06:00:25.350000000 -0500
+@@ -17,6 +17,7 @@
+
+ #include "fault-posix-ucontext.h"
+
++#define HAVE_STACKVMA 0
+ #if defined(__aarch64__) || defined(__ARM_64BIT_STATE) || defined(__ARM_PCS_AAPCS64) /* 64-bit */
+
+ /* See glibc/sysdeps/unix/sysv/linux/aarch64/sys/ucontext.h.
+ 
+HEREDOC
 cd ..
 
 mkdir build
