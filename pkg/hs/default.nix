@@ -1,51 +1,23 @@
-# Run using:
-#
-#     $(nix-build --no-link -A fullBuildScript)
-{
-  stack2nix-output-path ? "custom-stack2nix-output.nix",
-}:
-let
-  cabalPackageName = "urbit-king";
-  compiler = "ghc865"; # matching stack.yaml
+{ # Fetch the latest haskell.nix and import its default.nix
+  haskellNix ? import (builtins.fetchTarball "https://github.com/input-output-hk/haskell.nix/archive/master.tar.gz") {}
 
-  # Pin static-haskell-nix version.
-  static-haskell-nix =
-    if builtins.pathExists ../.in-static-haskell-nix
-      then toString ../. # for the case that we're in static-haskell-nix itself, so that CI always builds the latest version.
-      # Update this hash to use a different `static-haskell-nix` version:
-      else fetchTarball https://github.com/nh2/static-haskell-nix/archive/d1b20f35ec7d3761e59bd323bbe0cca23b3dfc82.tar.gz;
+# haskell.nix provides access to the nixpkgs pins which are used by our CI,
+# hence you will be more likely to get cache hits when using these.
+# But you can also just use your own, e.g. '<nixpkgs>'.
+, nixpkgsSrc ? <nixpkgs>
 
-  # Pin nixpkgs version
-  # By default to the one `static-haskell-nix` provides, but you may also give
-  # your own as long as it has the necessary patches, using e.g.
-  #     pkgs = import (fetchTarball https://github.com/nh2/nixpkgs/archive/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123.tar.gz) {};
-  pkgs = import "${static-haskell-nix}/nixpkgs.nix";
+# haskell.nix provides some arguments to be passed to nixpkgs, including some
+# patches and also the haskell.nix functionality itself as an overlay.
+, nixpkgsArgs ? haskellNix.nixpkgsArgs
 
-  stack2nix-script = import "${static-haskell-nix}/static-stack2nix-builder/stack2nix-script.nix" {
-    inherit pkgs;
-    stack-project-dir = toString ./.; # where stack.yaml is
-    hackageSnapshot = "2020-01-20T00:00:00Z"; # pins e.g. extra-deps without hashes or revisions
+# import nixpkgs with overlays
+, pkgs ? import nixpkgsSrc nixpkgsArgs
+}: pkgs.haskell-nix.project {
+  # 'cleanGit' cleans a source directory based on the files known by git
+  src = pkgs.haskell-nix.haskellLib.cleanGit {
+    name = "haskell-nix-project";
+    src = ./.;
   };
-
-  static-stack2nix-builder = import "${static-haskell-nix}/static-stack2nix-builder/default.nix" {
-    normalPkgs = pkgs;
-    inherit cabalPackageName compiler stack2nix-output-path;
-    # disableOptimization = true; # for compile speed
-  };
-
-  # Full invocation, including pinning `nix` version itself.
-  fullBuildScript = pkgs.writeShellScript "stack2nix-and-build-script.sh" ''
-    set -eu -o pipefail
-    STACK2NIX_OUTPUT_PATH=$(${stack2nix-script})
-    export NIX_PATH=nixpkgs=${pkgs.path}
-    ${pkgs.nix}/bin/nix-build --no-link -A static_package --argstr stack2nix-output-path "$STACK2NIX_OUTPUT_PATH" "$@"
-  '';
-
-in
-  {
-    static_package = static-stack2nix-builder.static_package;
-    inherit fullBuildScript;
-    # For debugging:
-    inherit stack2nix-script;
-    inherit static-stack2nix-builder;
-  }
+  # For `cabal.project` based projects specify the GHC version to use.
+  compiler-nix-name = "ghc883"; # Not used for `stack.yaml` based projects.
+}
