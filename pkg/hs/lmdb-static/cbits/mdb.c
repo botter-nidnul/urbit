@@ -314,7 +314,7 @@ union semun {
 	(defined(__GLIBC__) && GLIBC_VER < 0x020004))
 #  define MDB_USE_ROBUST	0
 # else
-#  define MDB_USE_ROBUST	1
+#  define MDB_USE_ROBUST	0
 # endif
 #endif /* !MDB_USE_ROBUST */
 
