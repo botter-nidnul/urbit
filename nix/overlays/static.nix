@@ -33,5 +33,9 @@ in {
       postInstall = ''
         rm $out/lib/liblmdb.so
       '';
-    });
+    makeFlags = old.makeFlags ++ [
+      "CPPFLAGS=-DMDB_USE_ROBUST=0"
+  ];
+    }
+  );
 }
