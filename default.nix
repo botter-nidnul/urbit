@@ -64,8 +64,8 @@ let
     # If we're running on linux and crossSystem is unspecified but
     # enableStatic = true - set the crossSystem to musl64.
     crossSystem =
-      if system == "x86_64-linux" && crossSystem == null && enableStatic then
-        "x86_64-unknown-linux-musl"
+      if system == "aarch64-linux" && crossSystem == null && enableStatic then
+        "aarch64-unknown-linux-musl"
       else
         crossSystem;
   };

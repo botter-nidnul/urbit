@@ -11,7 +11,7 @@ let
 in prev.lib.optionalAttrs isMusl {
   libsigsegv = prev.libsigsegv.overrideAttrs (attrs: {
     preConfigure = (attrs.preConfigure or "") + ''
-      sed -i 's/^CFG_FAULT=$/CFG_FAULT=fault-linux-i386.h/' configure
+      sed -i 's/^CFG_FAULT=$/CFG_FAULT=fault-linux-arm.h/' configure
     '';
   });
 
