@@ -48,15 +48,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "haskell.nix": {
-        "branch": "master",
+        "branch": "aarch64-musl",
         "description": "Alternative Haskell Infrastructure for Nixpkgs",
         "homepage": "https://input-output-hk.github.io/haskell.nix",
-        "owner": "input-output-hk",
+        "owner": "botter-nidnul",
         "repo": "haskell.nix",
-        "rev": "bbb34dcdf7b90d478002f91713531f418ddf1b53",
-        "sha256": "1qq397j8vnlp5npk8r675fzjfimg74fcvrkxcdgx7vj48315bh2w",
+        "rev": "f0148dc961ac92b82c0a96a1b973b546402637d1",
+        "sha256": "1l9z7w1gm3dk72dbka9pginpg5kyvl32yj7lw4ycla1fjra9lv6n",
         "type": "tarball",
-        "url": "https://github.com/input-output-hk/haskell.nix/archive/bbb34dcdf7b90d478002f91713531f418ddf1b53.tar.gz",
+        "url": "https://github.com/botter-nidnul/haskell.nix/archive/f0148dc961ac92b82c0a96a1b973b546402637d1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "libscrypt": {
