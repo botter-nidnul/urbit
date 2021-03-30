@@ -1,4 +1,4 @@
-{ stdenvNoCC, xxd, cacert }:
+callPackage ({ stdenvNoCC, xxd, cacert }:
 
 stdenvNoCC.mkDerivation {
   name = "ca-bundle";
@@ -26,4 +26,4 @@ stdenvNoCC.mkDerivation {
   '';
 
   preferLocalBuild = true;
-}
+})

@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, fetchGitHubLFS, bootFakeShip, solid, urbit, arvo, herb, xxd
+callPackage ({ lib, stdenvNoCC, fetchGitHubLFS, bootFakeShip, solid, urbit, arvo, herb, xxd
 , withRopsten ? false }:
 
 let
@@ -39,4 +39,4 @@ in {
 
     preferLocalBuild = true;
   };
-} // lib.optionalAttrs (!withRopsten) { inherit lfs; }
+} // lib.optionalAttrs (!withRopsten) { inherit lfs; })
